@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/aegis_hero.png" alt="Project Aegis Hero Banner" width="800">
+  <img src="assets/aegis-landscape.png" alt="Project Aegis Hero Banner" width="800">
 
   <h1>Project Aegis: AI Security Framework</h1>
   <p><em>The Next-Generation Security Scanner for Autonomous Agents and LLMs</em></p>
