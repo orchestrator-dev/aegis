@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Aegis specific
+tests/data/vulnerable_agent.json
+report.json
+
+# Pytest
+.pytest_cache/
