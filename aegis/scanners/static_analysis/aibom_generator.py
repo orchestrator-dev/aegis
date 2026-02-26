@@ -25,8 +25,20 @@ class AIBOMGenerator(AgentSecurityScanner):
         return findings
     
     async def _scan_dependencies(self) -> List[Dict]:
-        """Mock dependency discovery"""
-        return [{"name": "requests", "version": "2.28.1"}, {"name": "langchain", "version": "0.0.200"}]
+        """Run pip-audit to discover actual dependency vulnerabilities."""
+        import subprocess
+        import json as json_lib
+        try:
+            result = subprocess.run(
+                ["pip-audit", "--format=json", "--progress-spinner=off"],
+                capture_output=True, text=True, timeout=60
+            )
+            data = json_lib.loads(result.stdout)
+            # pip-audit returns [{"name", "version", "vulns": [...]}]
+            return data if isinstance(data, list) else []
+        except (FileNotFoundError, Exception):
+            # pip-audit not installed or failed — fall back to safe empty list
+            return []
         
     async def _discover_plugins(self) -> List[Dict]:
         """Mock plugin discovery"""

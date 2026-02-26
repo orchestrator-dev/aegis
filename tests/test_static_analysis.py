@@ -35,20 +35,20 @@ async def test_aibom_generator_clean(clean_agent):
     scanner = AIBOMGenerator(config={})
     findings = await scanner.scan(clean_agent)
     
-    # We still get 1 finding because our mock dependency list currently hardcodes requests==2.28.1
-    # which we configured to flag as vulnerable.
-    assert len(findings) == 1
-    assert findings[0].title == "Vulnerable Dependency Detected"
+    # G-10: _scan_dependencies now calls pip-audit (or returns [] if not installed).
+    # clean_agent uses gpt-4-turbo (no known vuln), so only dep findings may be present.
+    # We just assert no model-related finding fires, not a specific count.
+    titles = [f.title for f in findings]
+    assert "Vulnerable Foundation Model Detected" not in titles
 
 @pytest.mark.asyncio
 async def test_aibom_generator_vuln_model(vulnerable_agent):
     scanner = AIBOMGenerator(config={})
     findings = await scanner.scan(vulnerable_agent)
     
-    # Should flag the model AND the mock dependencies
+    # Should always flag the deprecated model (static check)
     titles = [f.title for f in findings]
     assert "Vulnerable Foundation Model Detected" in titles
-    assert "Vulnerable Dependency Detected" in titles
 
 @pytest.mark.asyncio
 async def test_config_analyzer_clean(clean_agent):

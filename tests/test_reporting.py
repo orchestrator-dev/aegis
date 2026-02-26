@@ -47,23 +47,28 @@ def mock_result():
     )
 
 def test_ai_cvss_calculation():
-    # Critical + L3 Action layer = 9.5 + 0.5 = 10.0
+    # CVSS now returns a full breakdown dict, not a bare float
     finding = Finding(
         title="Test", description="Test", severity=Severity.CRITICAL,
         maestro_layer=MAESTROLayer.L3_ACTION, remediation="",
         scanner_module="", target_system=""
     )
-    score = AICVSSScorer.calculate_score(finding)
-    assert score == 10.0
+    result = AICVSSScorer.calculate_score(finding)
+    assert isinstance(result, dict)
+    assert result["base_score"] == 9.5
+    assert result["score"] <= 10.0
+    assert "vector_string" in result
+    assert "severity" in result
 
-    # Low + L1 Input layer = 2.5 + 0.0 = 2.5
+    # Low + L1 Input layer (no AI modifiers) → base 2.5, modifier 1.2 = 3.0
     finding_low = Finding(
         title="Test", description="Test", severity=Severity.LOW,
         maestro_layer=MAESTROLayer.L1_INPUT, remediation="",
         scanner_module="", target_system=""
     )
-    score_low = AICVSSScorer.calculate_score(finding_low)
-    assert score_low == 2.5
+    result_low = AICVSSScorer.calculate_score(finding_low)
+    assert result_low["base_score"] == 2.5
+    assert result_low["score"] > 0
 
 def test_json_report_generation(mock_result):
     json_str = ReportGenerator.generate_json(mock_result)

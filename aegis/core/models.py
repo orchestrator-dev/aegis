@@ -72,6 +72,8 @@ class AgentManifest(BaseModel):
     token_budget: Optional[int] = None
     input_filters: List[str] = []
     output_filters: List[str] = []
+    # G-01: Live agent execution endpoint (optional; if set, scanners will make real HTTP calls)
+    target_endpoint: Optional[str] = None  # e.g. "http://localhost:8080/chat"
 
 class ThreatModel(BaseModel):
     """STRIDE-AI based threat model"""
@@ -115,6 +117,7 @@ class Finding(BaseModel):
     
     # Remediation
     remediation: str
+    remediation_code_snippet: Optional[str] = None  # G-06: Optional code snippet for fix
     references: List[str] = []
     
     # Metadata
