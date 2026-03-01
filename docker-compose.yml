@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-  aegis-api:
+  morpheus-api:
     build: .
     ports:
       - "8000:8000"
     environment:
       - REDIS_URL=redis://redis:6379
-      - AEGIS_API_KEY=your_secure_api_key_here
-      - AEGIS_AUDIT_DB=/app/data/audit.db
+      - MORPHEUS_API_KEY=your_secure_api_key_here
+      - MORPHEUS_AUDIT_DB=/app/data/audit.db
     depends_on:
       - redis
     volumes:

@@ -3,8 +3,8 @@ Tests for the GeneticFuzzer — verifies genetic algorithm structure, mutation,
 crossover, and fitness evaluation.
 """
 import pytest
-from aegis.core.models import AgentManifest
-from aegis.attack_library.generators.genetic_fuzzer import GeneticFuzzer, AttackGene
+from morpheus.core.models import AgentManifest
+from morpheus.attack_library.generators.genetic_fuzzer import GeneticFuzzer, AttackGene
 
 
 @pytest.fixture

@@ -1,4 +1,4 @@
-# Aegis — User Guide
+# Morpheus — User Guide
 
 ## Quick Start
 
@@ -7,19 +7,19 @@
 pip install -e ".[dev]"
 
 # Run a scan against a manifest file
-aegis scan --manifest examples/vulnerable_agent.json
+morpheus scan --manifest examples/vulnerable_agent.json
 
 # Output SARIF for GitHub Code Scanning
-aegis scan --manifest agent.json --format sarif -o results.sarif
+morpheus scan --manifest agent.json --format sarif -o results.sarif
 
 # Run a scan against a live agent endpoint
-aegis scan --manifest agent.json --endpoint http://localhost:8080/chat
+morpheus scan --manifest agent.json --endpoint http://localhost:8080/chat
 ```
 
 ## Defining an Agent Manifest
 
 ```python
-from aegis.core.models import AgentManifest, ToolDefinition
+from morpheus.core.models import AgentManifest, ToolDefinition
 
 target = AgentManifest(
     agent_id="my-agent-v1",
@@ -54,8 +54,8 @@ target = AgentManifest(
 
 ```python
 import asyncio
-from aegis.core.orchestrator import ScanOrchestrator
-from aegis.reporting.generator import ReportGenerator
+from morpheus.core.orchestrator import ScanOrchestrator
+from morpheus.reporting.generator import ReportGenerator
 
 async def main():
     orchestrator = ScanOrchestrator()
@@ -75,27 +75,27 @@ asyncio.run(main())
 
 ```bash
 # Start the API server
-uvicorn aegis.api.rest_api:app --reload
+uvicorn morpheus.api.rest_api:app --reload
 
 # Trigger a scan
 curl -X POST http://localhost:8000/api/v1/scans \
-  -H "Authorization: Bearer $AEGIS_API_KEY" \
+  -H "Authorization: Bearer $MORPHEUS_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"target": {...manifest...}}'
 
 # List all scans
 curl http://localhost:8000/api/v1/scans \
-  -H "Authorization: Bearer $AEGIS_API_KEY"
+  -H "Authorization: Bearer $MORPHEUS_API_KEY"
 
 # Dashboard metrics
 curl http://localhost:8000/api/v1/dashboard/metrics \
-  -H "Authorization: Bearer $AEGIS_API_KEY"
+  -H "Authorization: Bearer $MORPHEUS_API_KEY"
 ```
 
 ## Using the Genetic Fuzzer
 
 ```python
-from aegis.attack_library.generators.genetic_fuzzer import GeneticFuzzer
+from morpheus.attack_library.generators.genetic_fuzzer import GeneticFuzzer
 
 fuzzer = GeneticFuzzer()
 attacks = fuzzer.evolve_attacks(target, generations=10, population_size=20)
@@ -105,7 +105,7 @@ attacks = fuzzer.evolve_attacks(target, generations=10, population_size=20)
 ## Using the LLM Generator
 
 ```python
-from aegis.attack_library.generators.llm_generator import LLMGenerator
+from morpheus.attack_library.generators.llm_generator import LLMGenerator
 
 # With a local LLM
 gen = LLMGenerator(llm_endpoint="http://localhost:11434/api/generate")
@@ -119,7 +119,7 @@ attacks = await gen.generate_all_classes(target, count_per_class=5)
 ## STRIDE-AI Threat Modelling
 
 ```python
-from aegis.core.threat_model import ThreatModeler
+from morpheus.core.threat_model import ThreatModeler
 
 modeler = ThreatModeler()
 model = modeler.build_threat_model(target)
@@ -131,14 +131,14 @@ print(f"Attack surface: {model.attack_surface}")
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `AEGIS_API_KEY` | API authentication key | `your_secure_api_key_here` |
-| `AEGIS_AUDIT_DB` | SQLite audit log path | `audit.db` |
+| `MORPHEUS_API_KEY` | API authentication key | `your_secure_api_key_here` |
+| `MORPHEUS_AUDIT_DB` | SQLite audit log path | `audit.db` |
 | `REDIS_URL` | Redis URL for rate limiting | None (in-memory fallback) |
 
 ## Sandbox Testing (Docker)
 
 ```python
-from aegis.scanners.agent_simulation.sandbox import AgentSandbox, SandboxConfig
+from morpheus.scanners.agent_simulation.sandbox import AgentSandbox, SandboxConfig
 
 config = SandboxConfig(
     image="myorg/my-agent:latest",

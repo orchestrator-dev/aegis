@@ -1,8 +1,8 @@
 import pytest
-from aegis.core.models import AgentManifest, ToolDefinition
-from aegis.scanners.action_security.tool_misuse import ToolMisuseScanner
-from aegis.scanners.action_security.privilege_escalation import PrivilegeEscalationScanner
-from aegis.scanners.action_security.hitl_bypass import HITLBypassScanner
+from morpheus.core.models import AgentManifest, ToolDefinition
+from morpheus.scanners.action_security.tool_misuse import ToolMisuseScanner
+from morpheus.scanners.action_security.privilege_escalation import PrivilegeEscalationScanner
+from morpheus.scanners.action_security.hitl_bypass import HITLBypassScanner
 
 @pytest.fixture
 def agent_clean():

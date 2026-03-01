@@ -1,7 +1,7 @@
 import pytest
-from aegis.core.models import AgentManifest
-from aegis.scanners.data_privacy.leakage_scanner import DataLeakageScanner
-from aegis.scanners.data_privacy.context_isolation import ContextIsolationValidator
+from morpheus.core.models import AgentManifest
+from morpheus.scanners.data_privacy.leakage_scanner import DataLeakageScanner
+from morpheus.scanners.data_privacy.context_isolation import ContextIsolationValidator
 
 @pytest.fixture
 def agent_secure():

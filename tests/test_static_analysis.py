@@ -1,7 +1,7 @@
 import pytest
-from aegis.core.models import AgentManifest
-from aegis.scanners.static_analysis.aibom_generator import AIBOMGenerator
-from aegis.scanners.static_analysis.config_analyzer import ConfigAnalyzer
+from morpheus.core.models import AgentManifest
+from morpheus.scanners.static_analysis.aibom_generator import AIBOMGenerator
+from morpheus.scanners.static_analysis.config_analyzer import ConfigAnalyzer
 
 @pytest.fixture
 def clean_agent():

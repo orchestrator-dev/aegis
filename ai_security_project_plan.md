@@ -1,11 +1,11 @@
-# PROJECT AEGIS: AI SECURITY TESTING FRAMEWORK
+# PROJECT MORPHEUS: AI SECURITY TESTING FRAMEWORK
 ## Enterprise-Grade Security Testing Tool for AI Agents and LLM Applications
 
 ---
 
 ## EXECUTIVE SUMMARY
 
-Based on comprehensive research of the 2025 AI security landscape, including the OWASP Top 10 for Agentic Applications (December 2025), OWASP Top 10 for LLM Applications v2.0 (2025), NIST AI RMF, and real-world incidents from 2025-2026, this project plan outlines the development of **Project Aegis** - an enterprise-grade security testing framework specifically designed for AI agents, LLM applications, and agentic systems.
+Based on comprehensive research of the 2025 AI security landscape, including the OWASP Top 10 for Agentic Applications (December 2025), OWASP Top 10 for LLM Applications v2.0 (2025), NIST AI RMF, and real-world incidents from 2025-2026, this project plan outlines the development of **Project Morpheus** - an enterprise-grade security testing framework specifically designed for AI agents, LLM applications, and agentic systems.
 
 ### Critical Context (February 2026)
 - **73% of production AI deployments** contain prompt injection vulnerabilities (OWASP 2025)
@@ -70,7 +70,7 @@ We are not building another SAST scanner. We are building a **chain-of-attack an
 
 ```mermaid
 graph TB
-    subgraph "Project Aegis Core"
+    subgraph "Project Morpheus Core"
         CLI[CLI Interface]
         API[REST API]
         Web[Web Dashboard]
@@ -273,7 +273,7 @@ graph TB
 **1. Data Models & Schemas**
 
 ```python
-# /aegis/core/models.py
+# /morpheus/core/models.py
 
 from enum import Enum
 from typing import List, Dict, Optional
@@ -372,7 +372,7 @@ class AttackPath(BaseModel):
 
 class Finding(BaseModel):
     """Standardized security finding"""
-    finding_id: str = Field(default_factory=lambda: f"AEGIS-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}")
+    finding_id: str = Field(default_factory=lambda: f"MORPHEUS-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}")
     title: str
     description: str
     severity: Severity
@@ -426,12 +426,12 @@ class ScanResult(BaseModel):
 **2. Core Class Definitions**
 
 ```python
-# /aegis/core/scanner.py
+# /morpheus/core/scanner.py
 
 from abc import ABC, abstractmethod
 from typing import List, Iterator
 import asyncio
-from aegis.core.models import AgentManifest, Finding, TestCase, ScanResult
+from morpheus.core.models import AgentManifest, Finding, TestCase, ScanResult
 
 class AgentSecurityScanner(ABC):
     """Base interface for all scanner modules"""
@@ -524,7 +524,7 @@ class ScanOrchestrator:
 **3. Project Structure**
 
 ```
-project-aegis/
+project-morpheus/
 ├── README.md
 ├── pyproject.toml
 ├── setup.py
@@ -533,7 +533,7 @@ project-aegis/
 ├── docker-compose.yml
 ├── Dockerfile
 │
-├── aegis/
+├── morpheus/
 │   ├── __init__.py
 │   ├── core/
 │   │   ├── __init__.py
@@ -625,17 +625,17 @@ project-aegis/
 **4. Security Requirements for the Tool Itself**
 
 ```python
-# /aegis/security/self_protect.py
+# /morpheus/security/self_protect.py
 
 class SelfProtectionLayer:
     """
-    Critical: Aegis must protect itself from being compromised
+    Critical: Morpheus must protect itself from being compromised
     """
     
     @staticmethod
     def sanitize_test_payload(payload: str) -> str:
         """
-        Ensure test payloads don't compromise Aegis itself
+        Ensure test payloads don't compromise Morpheus itself
         - Remove execution characters
         - Validate encoding
         - Check for nested injections
@@ -649,7 +649,7 @@ class SelfProtectionLayer:
         Verify target endpoint is authorized
         - Check authorization token
         - Validate endpoint format
-        - Ensure not targeting Aegis itself
+        - Ensure not targeting Morpheus itself
         """
         # Implementation
         pass
@@ -665,7 +665,7 @@ class SelfProtectionLayer:
         # Implementation
         pass
 
-# /aegis/security/audit.py
+# /morpheus/security/audit.py
 
 class AuditLogger:
     """
@@ -711,7 +711,7 @@ class AuditLogger:
 
 **1. AI-BOM Generator**
 ```python
-# /aegis/scanners/static_analysis/aibom_generator.py
+# /morpheus/scanners/static_analysis/aibom_generator.py
 
 class AIBOMGenerator(AgentSecurityScanner):
     """
@@ -746,7 +746,7 @@ class AIBOMGenerator(AgentSecurityScanner):
 
 **2. Configuration Analyzer**
 ```python
-# /aegis/scanners/static_analysis/config_analyzer.py
+# /morpheus/scanners/static_analysis/config_analyzer.py
 
 class ConfigAnalyzer(AgentSecurityScanner):
     """
@@ -801,7 +801,7 @@ class ConfigAnalyzer(AgentSecurityScanner):
 
 **1. Prompt Injection Scanner**
 ```python
-# /aegis/scanners/prompt_injection/direct_injection.py
+# /morpheus/scanners/prompt_injection/direct_injection.py
 
 class DirectInjectionScanner(AgentSecurityScanner):
     """
@@ -858,7 +858,7 @@ class DirectInjectionScanner(AgentSecurityScanner):
 
 **2. Attack Library (YAML format)**
 ```yaml
-# /aegis/attack_library/templates/direct_injection.yaml
+# /morpheus/attack_library/templates/direct_injection.yaml
 
 - id: DI-001
   name: "Simple Instruction Override"
@@ -920,7 +920,7 @@ class DirectInjectionScanner(AgentSecurityScanner):
 
 **3. Genetic Fuzzer**
 ```python
-# /aegis/attack_library/generators/genetic_fuzzer.py
+# /morpheus/attack_library/generators/genetic_fuzzer.py
 
 import random
 from typing import List
@@ -1016,7 +1016,7 @@ class GeneticFuzzer:
 
 **4. Indirect Injection (Document Poisoning)**
 ```python
-# /aegis/scanners/prompt_injection/indirect_injection.py
+# /morpheus/scanners/prompt_injection/indirect_injection.py
 
 class IndirectInjectionScanner(AgentSecurityScanner):
     """
@@ -1101,7 +1101,7 @@ class IndirectInjectionScanner(AgentSecurityScanner):
 
 #### Critical: Defense Testing
 ```python
-# /aegis/scanners/prompt_injection/defense_validator.py
+# /morpheus/scanners/prompt_injection/defense_validator.py
 
 class DefenseValidator:
     """
@@ -1140,7 +1140,7 @@ class DefenseValidator:
 
 **1. Tool Misuse Scanner**
 ```python
-# /aegis/scanners/dynamic_analysis/tool_misuse.py
+# /morpheus/scanners/dynamic_analysis/tool_misuse.py
 
 class ToolMisuseScanner(AgentSecurityScanner):
     """
@@ -1266,7 +1266,7 @@ class ToolMisuseScanner(AgentSecurityScanner):
 
 **2. Privilege Escalation Scanner**
 ```python
-# /aegis/scanners/dynamic_analysis/privilege_escalation.py
+# /morpheus/scanners/dynamic_analysis/privilege_escalation.py
 
 class PrivilegeEscalationScanner(AgentSecurityScanner):
     """
@@ -1330,7 +1330,7 @@ class PrivilegeEscalationScanner(AgentSecurityScanner):
 
 **3. Human-in-the-Loop Bypass**
 ```python
-# /aegis/scanners/agent_simulation/hitl_validator.py
+# /morpheus/scanners/agent_simulation/hitl_validator.py
 
 class HITLBypassScanner(AgentSecurityScanner):
     """
@@ -1402,7 +1402,7 @@ class HITLBypassScanner(AgentSecurityScanner):
 
 **1. Data Leakage Scanner**
 ```python
-# /aegis/scanners/dynamic_analysis/data_leakage.py
+# /morpheus/scanners/dynamic_analysis/data_leakage.py
 
 import re
 from presidio_analyzer import AnalyzerEngine
@@ -1555,7 +1555,7 @@ class DataLeakageScanner(AgentSecurityScanner):
 
 **2. Context Isolation Validator**
 ```python
-# /aegis/scanners/dynamic_analysis/context_isolation.py
+# /morpheus/scanners/dynamic_analysis/context_isolation.py
 
 class ContextIsolationScanner(AgentSecurityScanner):
     """
@@ -1621,7 +1621,7 @@ class ContextIsolationScanner(AgentSecurityScanner):
 
 **1. AI-CVSS Scorer**
 ```python
-# /aegis/reporting/cvss_scorer.py
+# /morpheus/reporting/cvss_scorer.py
 
 class AICVSSScorer:
     """
@@ -1684,7 +1684,7 @@ class AICVSSScorer:
 
 **2. Report Generator**
 ```python
-# /aegis/reporting/reporter.py
+# /morpheus/reporting/reporter.py
 
 from jinja2 import Environment, FileSystemLoader
 import json
@@ -1695,7 +1695,7 @@ class ReportGenerator:
     """
     
     def __init__(self):
-        self.env = Environment(loader=FileSystemLoader('aegis/reporting/templates'))
+        self.env = Environment(loader=FileSystemLoader('morpheus/reporting/templates'))
     
     def generate_executive_report(self, scan_result: ScanResult) -> str:
         """Generate executive summary (HTML)"""
@@ -1769,9 +1769,9 @@ class ReportGenerator:
                 {
                     "tool": {
                         "driver": {
-                            "name": "Aegis AI Security Scanner",
+                            "name": "Morpheus AI Security Scanner",
                             "version": "1.0.0",
-                            "informationUri": "https://github.com/your-org/aegis",
+                            "informationUri": "https://github.com/your-org/morpheus",
                             "rules": self._generate_sarif_rules()
                         }
                     },
@@ -1814,7 +1814,7 @@ class ReportGenerator:
 ```yaml
 # /examples/ci_cd_integration/github_action.yml
 
-name: Aegis AI Security Scan
+name: Morpheus AI Security Scan
 
 on:
   push:
@@ -1825,7 +1825,7 @@ on:
     - cron: '0 0 * * 0'  # Weekly
 
 jobs:
-  aegis-scan:
+  morpheus-scan:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
@@ -1839,30 +1839,30 @@ jobs:
         with:
           python-version: '3.11'
       
-      - name: Install Aegis
+      - name: Install Morpheus
         run: |
-          pip install aegis-ai-scanner
+          pip install morpheus-ai-scanner
       
       - name: Run Security Scan
         env:
-          AEGIS_API_KEY: ${{ secrets.AEGIS_API_KEY }}
+          MORPHEUS_API_KEY: ${{ secrets.MORPHEUS_API_KEY }}
         run: |
-          aegis scan \
+          morpheus scan \
             --target ./agent_config.yaml \
             --output-format sarif \
-            --output-file aegis-results.sarif \
+            --output-file morpheus-results.sarif \
             --severity-threshold HIGH \
             --fail-on-critical
       
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: aegis-results.sarif
+          sarif_file: morpheus-results.sarif
       
       - name: Generate HTML Report
         if: always()
         run: |
-          aegis report \
+          morpheus report \
             --scan-id ${{ github.run_id }} \
             --format html \
             --output report.html
@@ -1871,7 +1871,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: aegis-report
+          name: morpheus-report
           path: report.html
       
       - name: Comment on PR
@@ -1880,25 +1880,25 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const summary = fs.readFileSync('aegis-summary.txt', 'utf8');
+            const summary = fs.readFileSync('morpheus-summary.txt', 'utf8');
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🛡️ Aegis AI Security Scan Results\n\n${summary}`
+              body: `## 🛡️ Morpheus AI Security Scan Results\n\n${summary}`
             });
 ```
 
 **4. Web Dashboard (FastAPI + React)**
 ```python
-# /aegis/api/rest_api.py
+# /morpheus/api/rest_api.py
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from typing import List
 import uuid
 
-app = FastAPI(title="Aegis AI Security Scanner API")
+app = FastAPI(title="Morpheus AI Security Scanner API")
 security = HTTPBearer()
 
 @app.post("/api/v1/scans", response_model=ScanResponse)
@@ -1969,11 +1969,11 @@ async def get_dashboard_metrics():
 
 ## PART 4: OPERATIONAL CONSIDERATIONS
 
-### Security Controls for Aegis Itself
+### Security Controls for Morpheus Itself
 
 #### 1. Authorization System
 ```python
-# /aegis/security/auth.py
+# /morpheus/security/auth.py
 
 class AuthorizationSystem:
     """
@@ -2012,7 +2012,7 @@ class AuthorizationSystem:
             )
         
         # Check user permissions
-        if not await self._user_has_permission(user, "aegis.scan.execute"):
+        if not await self._user_has_permission(user, "morpheus.scan.execute"):
             return False
         
         # Rate limit
@@ -2024,7 +2024,7 @@ class AuthorizationSystem:
 
 #### 2. Audit Logging
 ```python
-# /aegis/security/audit.py
+# /morpheus/security/audit.py
 
 class ImmutableAuditLog:
     """
@@ -2071,7 +2071,7 @@ class ImmutableAuditLog:
 
 #### 3. Rate Limiting
 ```python
-# /aegis/security/rate_limit.py
+# /morpheus/security/rate_limit.py
 
 from redis import Redis
 from datetime import datetime, timedelta
@@ -2118,37 +2118,37 @@ class RateLimiter:
 version: '3.8'
 
 services:
-  aegis-api:
+  morpheus-api:
     build: .
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://aegis:password@postgres:5432/aegis
+      - DATABASE_URL=postgresql://morpheus:password@postgres:5432/morpheus
       - REDIS_URL=redis://redis:6379
     depends_on:
       - postgres
       - redis
     volumes:
-      - ./aegis:/app/aegis
+      - ./morpheus:/app/morpheus
       - ./attack_library:/app/attack_library
   
-  aegis-worker:
+  morpheus-worker:
     build: .
-    command: celery -A aegis.worker worker --loglevel=info
+    command: celery -A morpheus.worker worker --loglevel=info
     environment:
-      - DATABASE_URL=postgresql://aegis:password@postgres:5432/aegis
+      - DATABASE_URL=postgresql://morpheus:password@postgres:5432/morpheus
       - REDIS_URL=redis://redis:6379
     depends_on:
       - postgres
       - redis
-      - aegis-api
+      - morpheus-api
   
   postgres:
     image: postgres:15
     environment:
-      - POSTGRES_USER=aegis
+      - POSTGRES_USER=morpheus
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=aegis
+      - POSTGRES_DB=morpheus
     volumes:
       - postgres_data:/var/lib/postgresql/data
   
@@ -2164,7 +2164,7 @@ services:
     environment:
       - REACT_APP_API_URL=http://localhost:8000
     depends_on:
-      - aegis-api
+      - morpheus-api
 
 volumes:
   postgres_data:
@@ -2187,7 +2187,7 @@ volumes:
 - **Remediation Rate**: % of findings fixed within SLA
 - **Risk Reduction**: Decrease in overall risk score over time
 - **Adoption Rate**: Number of agents scanned per week
-- **CI/CD Integration**: % of pipelines with Aegis enabled
+- **CI/CD Integration**: % of pipelines with Morpheus enabled
 
 ### Security Metrics
 - **Zero-Day Detection**: New vulnerability patterns discovered
@@ -2202,7 +2202,7 @@ volumes:
 ### Phase 6: Advanced Features (Months 7-9)
 - **Continuous Monitoring**: Real-time agent behavior analysis
 - **Behavioral Anomaly Detection**: ML-based anomaly detection
-- **Adversarial Training**: Use Aegis findings to improve agent defenses
+- **Adversarial Training**: Use Morpheus findings to improve agent defenses
 - **Multi-Agent Orchestration Testing**: Complex multi-agent security
 - **Compliance Reporting**: Auto-generate SOC2, ISO 27001 reports
 
@@ -2266,7 +2266,7 @@ volumes:
 ## APPENDIX B: COMPLIANCE MAPPING
 
 ### OWASP Agentic Top 10 Coverage
-| ID | Risk | Aegis Module | Coverage |
+| ID | Risk | Morpheus Module | Coverage |
 |----|------|--------------|----------|
 | ASI01 | Goal Hijack | Prompt Injection Scanner | ✅ Full |
 | ASI02 | Tool Misuse | Tool Misuse Scanner | ✅ Full |
@@ -2289,7 +2289,7 @@ volumes:
 
 ## CONCLUSION
 
-**Project Aegis** is a comprehensive, enterprise-grade security testing framework specifically designed for the unique challenges of AI agents and LLM applications in 2025-2026. By combining:
+**Project Morpheus** is a comprehensive, enterprise-grade security testing framework specifically designed for the unique challenges of AI agents and LLM applications in 2025-2026. By combining:
 
 1. **Threat-driven design** based on OWASP Top 10 and MAESTRO
 2. **Comprehensive attack coverage** (200+ techniques)
@@ -2297,7 +2297,7 @@ volumes:
 4. **Actionable intelligence** (not just CVEs)
 5. **CI/CD native integration**
 
-Aegis will become the industry standard for AI security testing.
+Morpheus will become the industry standard for AI security testing.
 
 ### Next Steps
 1. **Review this plan** with stakeholders
@@ -2307,10 +2307,10 @@ Aegis will become the industry standard for AI security testing.
 5. **Establish partnerships** with OWASP, NIST, AI vendors
 
 ### Contact
-For questions or to contribute to Project Aegis:
-- GitHub: [Your Org]/project-aegis
-- Email: aegis-security@yourorg.com
-- Slack: #aegis-dev
+For questions or to contribute to Project Morpheus:
+- GitHub: [Your Org]/project-morpheus
+- Email: morpheus-security@yourorg.com
+- Slack: #morpheus-dev
 
 ---
 

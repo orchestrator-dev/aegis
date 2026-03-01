@@ -1,5 +1,5 @@
 import pytest
-from aegis.core.models import (
+from morpheus.core.models import (
     AgentManifest, ToolDefinition, Severity, 
     MAESTROLayer, OWASPAgenticCategory
 )

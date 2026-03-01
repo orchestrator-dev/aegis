@@ -1,8 +1,8 @@
-# Aegis — Architecture Overview
+# Morpheus — Architecture Overview
 
 ```mermaid
 graph TD
-    CLI["CLI (aegis scan)"] --> ORC["ScanOrchestrator"]
+    CLI["CLI (morpheus scan)"] --> ORC["ScanOrchestrator"]
     API["REST API (FastAPI)"] --> ORC
 
     ORC --> AUTH["AuthorizationSystem"]
@@ -34,14 +34,14 @@ graph TD
 
 | Layer | Package | Purpose |
 |---|---|---|
-| **Orchestration** | `aegis.core.orchestrator` | Runs all scanners concurrently, aggregates findings |
-| **Scanners** | `aegis.scanners.*` | Domain-specific security checks |
-| **Agent Simulation** | `aegis.scanners.agent_simulation` | Docker sandbox + HITL bypass probing |
-| **Attack Library** | `aegis.attack_library` | Genetic fuzzer + LLM generator for adversarial prompts |
-| **Threat Modelling** | `aegis.core.threat_model` | STRIDE-AI analysis of agent manifests |
-| **Reporting** | `aegis.reporting` | Markdown, JSON, SARIF 2.1.0 output |
-| **Security** | `aegis.security` | Auth, rate limiting, audit log |
-| **API** | `aegis.api` | FastAPI REST interface |
+| **Orchestration** | `morpheus.core.orchestrator` | Runs all scanners concurrently, aggregates findings |
+| **Scanners** | `morpheus.scanners.*` | Domain-specific security checks |
+| **Agent Simulation** | `morpheus.scanners.agent_simulation` | Docker sandbox + HITL bypass probing |
+| **Attack Library** | `morpheus.attack_library` | Genetic fuzzer + LLM generator for adversarial prompts |
+| **Threat Modelling** | `morpheus.core.threat_model` | STRIDE-AI analysis of agent manifests |
+| **Reporting** | `morpheus.reporting` | Markdown, JSON, SARIF 2.1.0 output |
+| **Security** | `morpheus.security` | Auth, rate limiting, audit log |
+| **API** | `morpheus.api` | FastAPI REST interface |
 
 ## Data Flow
 

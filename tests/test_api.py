@@ -2,11 +2,11 @@ import os
 import hashlib
 
 # Must be set BEFORE rest_api is imported so AuthorizationSystem hashes the correct key
-os.environ["AEGIS_API_KEY"] = "test_key"
+os.environ["MORPHEUS_API_KEY"] = "test_key"
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
-from aegis.api.rest_api import app, auth_system  # noqa: E402
+from morpheus.api.rest_api import app, auth_system  # noqa: E402
 
 # Ensure auth_system uses the test key hash even if the module was already imported
 auth_system.valid_api_key_hash = hashlib.sha256(b"test_key").hexdigest()

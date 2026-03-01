@@ -1,9 +1,9 @@
 import pytest
 import json
 from datetime import datetime
-from aegis.core.models import ScanResult, AgentManifest, Finding, Severity, MAESTROLayer
-from aegis.reporting.ai_cvss import AICVSSScorer
-from aegis.reporting.generator import ReportGenerator
+from morpheus.core.models import ScanResult, AgentManifest, Finding, Severity, MAESTROLayer
+from morpheus.reporting.ai_cvss import AICVSSScorer
+from morpheus.reporting.generator import ReportGenerator
 
 @pytest.fixture
 def mock_result():
@@ -81,7 +81,7 @@ def test_json_report_generation(mock_result):
 def test_markdown_report_generation(mock_result):
     md_str = ReportGenerator.generate_markdown(mock_result)
     
-    assert "# Aegis Security Report: ReportingBot" in md_str
+    assert "# Morpheus Security Report: ReportingBot" in md_str
     assert "**Overall Risk Score:** 9.5/10.0" in md_str
     assert "Critical Vulnerability" in md_str
     assert "Low Vulnerability" in md_str

@@ -1,5 +1,5 @@
 """
-Tests for aegis/security/ controls: AuthorizationSystem, RateLimiter, ImmutableAuditLog.
+Tests for morpheus/security/ controls: AuthorizationSystem, RateLimiter, ImmutableAuditLog.
 """
 import os
 import hashlib
@@ -7,12 +7,12 @@ import asyncio
 import pytest
 
 # Set up test env before imports
-os.environ["AEGIS_API_KEY"] = "test-secret-key"
+os.environ["MORPHEUS_API_KEY"] = "test-secret-key"
 
-from aegis.security.auth import AuthorizationSystem
-from aegis.security.rate_limit import RateLimiter
-from aegis.security.audit import ImmutableAuditLog
-from aegis.core.models import AgentManifest
+from morpheus.security.auth import AuthorizationSystem
+from morpheus.security.rate_limit import RateLimiter
+from morpheus.security.audit import ImmutableAuditLog
+from morpheus.core.models import AgentManifest
 
 # ─── AuthorizationSystem ──────────────────────────────────────────────────────
 
@@ -99,7 +99,7 @@ class TestImmutableAuditLog:
         import tempfile
         import os
         self._tmpfile = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
-        os.environ["AEGIS_AUDIT_DB"] = self._tmpfile.name
+        os.environ["MORPHEUS_AUDIT_DB"] = self._tmpfile.name
         self.audit = ImmutableAuditLog()
 
     def teardown_method(self):

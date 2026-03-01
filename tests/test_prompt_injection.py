@@ -1,7 +1,7 @@
 import pytest
-from aegis.core.models import AgentManifest, ToolDefinition
-from aegis.scanners.prompt_injection.direct_injection import DirectInjectionScanner
-from aegis.scanners.prompt_injection.indirect_injection import IndirectInjectionScanner
+from morpheus.core.models import AgentManifest, ToolDefinition
+from morpheus.scanners.prompt_injection.direct_injection import DirectInjectionScanner
+from morpheus.scanners.prompt_injection.indirect_injection import IndirectInjectionScanner
 
 @pytest.fixture
 def base_agent():

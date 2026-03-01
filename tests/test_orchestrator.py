@@ -1,9 +1,9 @@
 import pytest
 import asyncio
 from typing import List
-from aegis.core.models import AgentManifest, Finding, Severity, MAESTROLayer
-from aegis.core.scanner import AgentSecurityScanner
-from aegis.core.orchestrator import ScanOrchestrator
+from morpheus.core.models import AgentManifest, Finding, Severity, MAESTROLayer
+from morpheus.core.scanner import AgentSecurityScanner
+from morpheus.core.orchestrator import ScanOrchestrator
 
 class MockScanner(AgentSecurityScanner):
     async def scan(self, target: AgentManifest) -> List[Finding]:

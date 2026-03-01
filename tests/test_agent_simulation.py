@@ -2,9 +2,9 @@
 Tests for the HITLValidator and DefenseValidator simulation-mode behavior.
 """
 import pytest
-from aegis.core.models import AgentManifest, ToolDefinition
-from aegis.scanners.agent_simulation.hitl_validator import HITLValidator
-from aegis.scanners.prompt_injection.defense_validator import DefenseValidator
+from morpheus.core.models import AgentManifest, ToolDefinition
+from morpheus.scanners.agent_simulation.hitl_validator import HITLValidator
+from morpheus.scanners.prompt_injection.defense_validator import DefenseValidator
 
 
 @pytest.fixture
@@ -57,7 +57,7 @@ class TestHITLValidator:
     async def test_findings_are_critical(self, hitl_agent):
         scanner = HITLValidator(config={})
         findings = await scanner.scan(hitl_agent)
-        from aegis.core.models import Severity
+        from morpheus.core.models import Severity
         assert all(f.severity == Severity.CRITICAL for f in findings)
 
     @pytest.mark.asyncio
@@ -94,5 +94,5 @@ class TestDefenseValidator:
     async def test_has_correct_layer(self, filtered_agent):
         scanner = DefenseValidator(config={})
         findings = await scanner.scan(filtered_agent)
-        from aegis.core.models import MAESTROLayer
+        from morpheus.core.models import MAESTROLayer
         assert all(f.maestro_layer == MAESTROLayer.L1_INPUT for f in findings)

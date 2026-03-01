@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="assets/aegis-landscape.png" alt="Project Aegis Hero Banner" width="800">
+  <img src="assets/morpheus-landscape.png" alt="Project Morpheus Hero Banner" width="800">
 
-  <h1>Project Aegis: AI Security Framework</h1>
+  <h1>Project Morpheus: AI Security Framework</h1>
   <p><em>The Next-Generation Security Scanner for Autonomous Agents and LLMs</em></p>
 
   <p>
@@ -18,7 +18,7 @@
 
 As organizations rapidly adopt LLM-powered autonomous agents, a massive new attack surface emerges. Unlike traditional software, AI agents interpret fuzzy inputs, possess tools capable of changing system state, and maintain dynamic memories across sessions.
 
-**Project Aegis** acts as an automated red-team orchestrator. It ensures your AI deployments are secure before they reach production by:
+**Project Morpheus** acts as an automated red-team orchestrator. It ensures your AI deployments are secure before they reach production by:
 
 - **Preventing Financial DoS:** Detecting agents that can be tricked into infinite loops or unbounded API calls.
 - **Isolating Sensitive Context:** Validating that multi-tenant vector databases strictly partition user memories.
@@ -31,11 +31,11 @@ As organizations rapidly adopt LLM-powered autonomous agents, a massive new atta
 
 ## 🏗️ Architecture
 
-Aegis is built on a modular, async-first plugin architecture. An `AgentManifest` (JSON definition of your agent's capabilities) is fed to the `ScanOrchestrator`, which runs all scanners **concurrently** via `asyncio.gather`.
+Morpheus is built on a modular, async-first plugin architecture. An `AgentManifest` (JSON definition of your agent's capabilities) is fed to the `ScanOrchestrator`, which runs all scanners **concurrently** via `asyncio.gather`.
 
 ```mermaid
 graph TD
-    CLI["CLI (aegis scan)"] --> ORC
+    CLI["CLI (morpheus scan)"] --> ORC
     API["REST API (FastAPI)"] --> ORC["ScanOrchestrator\nasyncio.gather"]
 
     ORC --> AUTH["AuthorizationSystem"]
@@ -133,7 +133,7 @@ pip install pip-audit
 }
 ```
 
-> **`target_endpoint`** is optional. When set, all scanners perform **live HTTP probes** against your running agent. Without it, Aegis runs in **simulation mode** (static analysis only).
+> **`target_endpoint`** is optional. When set, all scanners perform **live HTTP probes** against your running agent. Without it, Morpheus runs in **simulation mode** (static analysis only).
 
 ### 2. Run the CLI Scanner
 
@@ -141,34 +141,34 @@ pip install pip-audit
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 # Human-readable Markdown report
-python aegis/cli.py scan my_agent.json --format md
+python morpheus/cli.py scan my_agent.json --format md
 
 # JSON report for downstream systems
-python aegis/cli.py scan my_agent.json --format json --output report.json
+python morpheus/cli.py scan my_agent.json --format json --output report.json
 
 # SARIF 2.1.0 for GitHub Code Scanning
-python aegis/cli.py scan my_agent.json --format sarif --output results.sarif
+python morpheus/cli.py scan my_agent.json --format sarif --output results.sarif
 ```
 
 ### 3. Run via REST API
 
 ```bash
 # Start the API server
-uvicorn aegis.api.rest_api:app --reload
+uvicorn morpheus.api.rest_api:app --reload
 
 # Trigger a scan
 curl -X POST http://localhost:8000/api/v1/scans \
-  -H "Authorization: Bearer $AEGIS_API_KEY" \
+  -H "Authorization: Bearer $MORPHEUS_API_KEY" \
   -H "Content-Type: application/json" \
   -d @my_agent.json
 
 # List all completed scans
 curl http://localhost:8000/api/v1/scans \
-  -H "Authorization: Bearer $AEGIS_API_KEY"
+  -H "Authorization: Bearer $MORPHEUS_API_KEY"
 
 # Dashboard metrics
 curl http://localhost:8000/api/v1/dashboard/metrics \
-  -H "Authorization: Bearer $AEGIS_API_KEY"
+  -H "Authorization: Bearer $MORPHEUS_API_KEY"
 ```
 
 #### Docker Compose (with Redis rate limiting)
@@ -181,9 +181,9 @@ docker-compose up -d --build
 
 ```python
 import asyncio
-from aegis.core.models import AgentManifest
-from aegis.core.orchestrator import ScanOrchestrator
-from aegis.reporting.generator import ReportGenerator
+from morpheus.core.models import AgentManifest
+from morpheus.core.orchestrator import ScanOrchestrator
+from morpheus.reporting.generator import ReportGenerator
 
 async def main():
     manifest = AgentManifest(
@@ -202,7 +202,7 @@ asyncio.run(main())
 ### 5. Run Sandboxed Tests (Docker)
 
 ```python
-from aegis.scanners.agent_simulation.sandbox import AgentSandbox, SandboxConfig
+from morpheus.scanners.agent_simulation.sandbox import AgentSandbox, SandboxConfig
 
 config = SandboxConfig(
     image="myorg/my-agent:latest",
@@ -219,7 +219,7 @@ async with AgentSandbox(config) as sandbox:
 ### 6. Threat Modelling
 
 ```python
-from aegis.core.threat_model import ThreatModeler
+from morpheus.core.threat_model import ThreatModeler
 
 model = ThreatModeler().build_threat_model(manifest)
 print(f"Risk score: {model.risk_score}/10")
@@ -232,9 +232,9 @@ print(f"Trust boundaries: {model.trust_boundaries}")
 Add to your CI/CD pipeline:
 
 ```yaml
-# .github/workflows/aegis.yml
-- name: Run Aegis AI Security Scan
-  run: python aegis/cli.py scan agent.json --format sarif --output results.sarif
+# .github/workflows/morpheus.yml
+- name: Run Morpheus AI Security Scan
+  run: python morpheus/cli.py scan agent.json --format sarif --output results.sarif
 
 - name: Upload to GitHub Code Scanning
   uses: github/codeql-action/upload-sarif@v3
@@ -256,9 +256,9 @@ All findings are scored using **AI-CVSS** — an AI-adapted CVSS variant that in
 
 | Control | Implementation |
 |---|---|
-| **Authentication** | SHA-256 hashed Bearer token via `AEGIS_API_KEY` env var |
+| **Authentication** | SHA-256 hashed Bearer token via `MORPHEUS_API_KEY` env var |
 | **Rate Limiting** | Sliding-window rate limiter (Redis primary, in-memory fallback) |
-| **Audit Log** | Hash-chained, tamper-evident SQLite log (`AEGIS_AUDIT_DB` env var) |
+| **Audit Log** | Hash-chained, tamper-evident SQLite log (`MORPHEUS_AUDIT_DB` env var) |
 
 ---
 
@@ -266,8 +266,8 @@ All findings are scored using **AI-CVSS** — an AI-adapted CVSS variant that in
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `AEGIS_API_KEY` | API authentication key | `your_secure_api_key_here` |
-| `AEGIS_AUDIT_DB` | Path to the SQLite audit log | `audit.db` |
+| `MORPHEUS_API_KEY` | API authentication key | `your_secure_api_key_here` |
+| `MORPHEUS_AUDIT_DB` | Path to the SQLite audit log | `audit.db` |
 | `REDIS_URL` | Redis URL for distributed rate limiting | None (in-memory fallback) |
 
 ---
@@ -275,7 +275,7 @@ All findings are scored using **AI-CVSS** — an AI-adapted CVSS variant that in
 ## 📂 Project Structure
 
 ```
-aegis/
+morpheus/
 ├── core/
 │   ├── models.py           # AgentManifest, Finding, ScanResult, ThreatModel
 │   ├── scanner.py          # Base scanner class + _send_to_agent()

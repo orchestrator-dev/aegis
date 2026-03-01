@@ -817,7 +817,7 @@ The AI security landscape in 2025-2026 is characterized by high exploitability a
 - Reputation damage
 - Competitive disadvantage
 
-**Project Aegis** provides the comprehensive testing framework needed to identify and remediate these vulnerabilities before they're exploited in production.
+**Project Morpheus** provides the comprehensive testing framework needed to identify and remediate these vulnerabilities before they're exploited in production.
 
 ---
 
